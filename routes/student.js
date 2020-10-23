@@ -48,7 +48,7 @@ module.exports = {
             }
             res.render('edit-student.ejs', {
                 title: "Edit Student"
-                ,player: result[0]
+                ,student: result[0]
                 ,message: ''
             });
         });
