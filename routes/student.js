@@ -40,13 +40,13 @@ module.exports = {
         });
     },
     editStudentPage: (req, res) => {
-        let puid = req.params.puid;
+        let puid = req.params.id;
         let query = "SELECT * FROM `student` WHERE puid = '" + puid + "' ";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
             }
-            res.render('edit-student.ejs', {
+            res.render('edit_student.ejs', {
                 title: "Edit Student"
                 ,student: result[0]
                 ,message: ''
@@ -54,11 +54,12 @@ module.exports = {
         });
     },
     editStudent: (req, res) => {
-        let puid = req.params.puid;
+        let puid = req.params.id;
         let student_name = req.body.student_name;
+        let updated_student_puid = req.body.puid;
         
 
-        let query = "UPDATE `student` SET `puid` = '" + puid + "', `student_name` = '" + student_name + "'";
+        let query = "UPDATE `student` SET `puid` = '" + updated_student_puid + "', `student_name` = '" + student_name + "' WHERE `student`.`puid` = '" + puid + "'";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -68,8 +69,9 @@ module.exports = {
     },
 
     deleteStudent: (req, res) => {
-        let puid = req.body.puid;
-        let deleteUserQuery = 'DELETE FROM student WHERE id = "' + puid + '"';
+        let puid = req.params.id;
+        console.log("PuID is", puid);
+        let deleteUserQuery = 'DELETE FROM student WHERE puid = "' + puid +'"';
 
 
             
