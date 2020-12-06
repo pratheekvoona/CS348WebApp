@@ -1,5 +1,7 @@
 const fs = require('fs');
 
+// TODO: Edit Class /editClass and Delete Class /deleteClass
+
 module.exports = {
     addClassPage: (req, res) => {
         res.render('insert_class.ejs', {
