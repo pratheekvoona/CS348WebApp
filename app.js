@@ -7,6 +7,7 @@ const app = express();
 
 const {getHomePage} = require('./routes/index');
 const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');
+const {addClassPage} = require('./routes/class');
 const port = 5000;
 
 // create connection to database
