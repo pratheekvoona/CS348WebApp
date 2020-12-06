@@ -1,0 +1,40 @@
+<%- include ('partials/header.ejs'); -%>
+<div class="container">
+    <% if (message) { %>
+        <p class="text-center text-danger"><%= message %></p>
+    <% } %>
+
+    <% if (professor) { %>
+        <form class="add-player-form" action="" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="class_no">Class No</label>
+                    <input type="text" class="form-control" name="class_no" id="class_no" value="<%= professor.class_no %>" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="prof_id">Professor Id</label>
+                    <input type="text" class="form-control" name="prof_id" id="prof_id" value="<%= professor.professor_id %>" required>
+                </div>
+                
+                
+                <div class="form-group col-md-4">
+                    <label for="rating">Rating</label>
+                    <input type="text" class="form-control" name="rating" id="rating" value="<%= professor.rating %>" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="review">Review</label>
+                    <input type="text" class="form-control" name="review" id="review" value="<%= professor.review %>" required>
+                </div>
+                            
+                
+            </div>
+            <button type="submit" class="btn btn-primary float-right">Update Review</button>
+        </form>
+
+    <% } else { %>
+        <p class="text-center">Review Not Found. Go <a href="/addProfessor">here</a> to add review..</p>
+    <% } %>
+</div>
+</div>
+</body>
+</html>

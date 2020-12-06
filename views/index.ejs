@@ -1,0 +1,30 @@
+<%- include("partials/header"); -%>
+    <div class="table-wrapper">
+        <% if (students.length > 0) {%>
+            <table class="table table-hovered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">puid</th>
+                        <th scope="col">student_name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% students.forEach((student, index) => { %>
+                        <tr>
+                            <th scope="row"><%= student.puid %></th>
+                            <td><%= student.student_name %></td>
+                            <td>
+                                <a href="/edit/<%= student.puid %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Edit</a>
+                                <a href="/delete/<%= student.puid %>" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="text-center">No students found. Go <a href="/add" >here</a> to add students.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>
