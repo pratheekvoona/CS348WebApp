@@ -1,0 +1,32 @@
+<%- include("partials/header"); -%>
+    <div class="table-wrapper">
+        <% if (study.length > 0) {%>
+            <table class="table table-hovered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Class No</th>
+												<th scope="col">study_link</th>
+												
+                    </tr>
+                </thead>
+                <tbody>
+                    <% study.forEach((study_links, index) => { %>
+                        <tr>
+                            <th scope="row"><%= study_links.class_no %></th>
+							                <td><%= study_links.study_link %></td>
+														
+                            <td>
+                                <a href="/editStudy/<%= study_links.study_link %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Edit</a>
+                                <a href="/deleteStudy/<%= study_links.study_link %>" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="text-center">No Resources found. Go <a href="/addProfessor" >here</a> to add Resources.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

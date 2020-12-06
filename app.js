@@ -9,11 +9,12 @@ const {getHomePage} = require('./routes/index');
 const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');
 const {addClassPage, addClass} = require('./routes/class');
 const {getClassesPage} = require('./routes/view_classes')
-const {addStudyPage, addStudy} = require('./routes/study');
+const {addStudyPage, addStudy, editStudyPage, editStudy, deleteStudy} = require('./routes/study');
 const {addProfessorPage, addProfessor, editProfessor, editProfessorPage, editReviewPage, editReview, deleteProfessor} = require('./routes/professor');
 const {deleteReview} = require('./routes/professor');
 const {deleteClass} = require('./routes/class');
 const {getProfessorsPage} = require('./routes/view_professors')
+const {getStudyPage} = require('./routes/view_study')
 const {getReviewsPage} = require('./routes/view_reviews')
 const port = 5000;
 
@@ -51,19 +52,23 @@ app.get('/add', addStudentPage);
 app.get('/addClass', addClassPage);
 app.get('/addProfessor', addProfessorPage);
 app.get('/addStudy', addStudyPage);
+app.get('/editStudy/:id', editStudyPage);
 app.get('/editReview/:id', editReviewPage);
 app.get('/Classes', getClassesPage);
 app.get('/Reviews', getReviewsPage);
 app.get('/Professors', getProfessorsPage);
+app.get('/Study', getStudyPage);
 app.get('/edit/:id', editStudentPage);
 app.get('/editProfessor/:id', editProfessorPage);
 app.get('/delete/:id', deleteStudent);
 app.get('/deleteProfessor/:id', deleteProfessor);
 app.get('/deleteReview/:id', deleteReview);
 app.get('/deleteClass/:id', deleteClass);
+app.get('/deleteStudy/:id', deleteStudy);
 app.post('/add', addStudent);
 app.post('/addClass', addClass);
 app.post('/addStudy', addStudy);
+app.post('/editStudy/:id', editStudy);
 app.post('/addProfessor', addProfessor);
 app.post('/edit/:id', editStudent);
 app.post('/editProfessor/:id', editProfessor);
