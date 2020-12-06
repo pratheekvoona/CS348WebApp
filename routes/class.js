@@ -16,7 +16,7 @@ module.exports = {
         let class_title = req.body.class_title;
         
 
-        let puidQuery = "SELECT * FROM `classes` WHERE class_no ='" + class_no + "' ";
+        let puidQuery = "SELECT * FROM `class` WHERE class_no ='" + class_no + "' ";
 
         db.query(puidQuery, (err, result) => {
             if (err) {
@@ -30,7 +30,7 @@ module.exports = {
                 });
             } else {
 
-                let query = "INSERT INTO `classes` (class_no, class_title) VALUES ('" +
+                let query = "INSERT INTO `class` (class_no, class_title) VALUES ('" +
                 class_no + "', '" + class_title + "')";
                 db.query(query, (err, result) => {
                     if (err) {
