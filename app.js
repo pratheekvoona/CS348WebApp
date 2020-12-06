@@ -40,6 +40,7 @@ app.use(fileUpload()); // configure fileupload
 
 app.get('/', getHomePage);
 app.get('/add', addStudentPage);
+app.get('/addClass', addClassPage);
 app.get('/edit/:id', editStudentPage);
 app.get('/delete/:id', deleteStudent);
 app.post('/add', addStudent);
