@@ -7,7 +7,7 @@ const app = express();
 
 const {getHomePage} = require('./routes/index');
 const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');
-const {addClassPage, addClass} = require('./routes/class');
+const {addClassPage, addClass, editClassPage, editClass} = require('./routes/class');
 const {getClassesPage} = require('./routes/view_classes')
 const port = 5000;
 
@@ -49,6 +49,10 @@ app.get('/delete/:id', deleteStudent);
 app.post('/add', addStudent);
 app.post('/addClass', addClass);
 app.post('/edit/:id', editStudent);
+
+
+app.get('/editClass/:id', editClassPage)
+app.post('/editClass/:id', editClass);
 
 
 // set the app to listen on the port

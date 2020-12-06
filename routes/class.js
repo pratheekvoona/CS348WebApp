@@ -40,5 +40,33 @@ module.exports = {
                 });
              }
         });
-		}
+        },
+        editClassPage: (req, res) => {
+            let class_no = req.params.id;
+            let query = "SELECT * FROM `class` WHERE class_no = '" + class_no + "' ";
+            db.query(query, (err, result) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                res.render('edit_class.ejs', {
+                    title: "Edit Class"
+                    ,student: result[0]
+                    ,message: ''
+                });
+            });
+        },
+        editClass: (req, res) => {
+            let class_no = req.params.id;
+            let class_title = req.body.class_title;
+            let updated_class_no = req.body.class_no;
+            
+    
+            let query = "UPDATE `class` SET `class_no` = '" + updated_class_no + "', `class_title` = '" + class_title + "' WHERE `class`.`class_no` = '" + class_no + "'";
+            db.query(query, (err, result) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                res.redirect('/');
+            });
+        },
 	};

@@ -8,18 +8,18 @@
         <form class="add-player-form" action="" method="post" enctype="multipart/form-data">
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="puid">puid</label>
-                    <input type="text" class="form-control" name="puid" id="puid" value="<%= student.puid %>" required>
+                    <label for="class_no">class_no</label>
+                    <input type="text" class="form-control" name="class_no" id="class_no" value="<%= student.class_no %>" required>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="student_name">student_name</label>
-                    <input type="text" class="form-control" name="student_name" id="student_name" value="<%= student.student_name %>" required>
+                    <label for="student_name">class_title</label>
+                    <input type="text" class="form-control" name="class_title" id="class_title" value="<%= student.class_title %>" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success float-right">Update Student</button>
+            <button type="submit" class="btn btn-success float-right">Update Class</button>
         </form>
     <% } else { %>
-        <p class="text-center">Student Not Found. Go <a href="/add">here</a> to add students..</p>
+        <p class="text-center">Class Not Found. Go <a href="/addClasses">here</a> to add Class..</p>
     <% } %>
 </div>
 </div>
