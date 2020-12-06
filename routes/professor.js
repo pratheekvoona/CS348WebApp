@@ -12,37 +12,36 @@ module.exports = {
     addProfessor: (req, res) => {
 
         let message = '';
-				
-				let prof_id = req.body.prof_id;
-				let class_no = req.body.class_no;
-				let first_name = req.body.first_name;
-				let last_name = req.body.last_name;
-				let rating = req.body.rating;
+        let prof_id = req.body.prof_id;
+        let class_no = req.body.class_no;
+        let first_name = req.body.first_name;
+        let last_name = req.body.last_name;
+        let rating = req.body.rating;
+        let review = req.body.review;
+
+        let profQuery = "SELECT * FROM `professor` WHERE professor_id ='" + prof_id + "' ";
         
-
-        let puidQuery = "SELECT * FROM `professor` WHERE prof_id ='" + prof_id + "' ";
-
-        db.query(puidQuery, (err, result) => {
+        db.query(profQuery, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
             }
-            if (result.length > 0) {
-                message = 'Professor already exists';
-                res.render('insert_professor.ejs', {
-                    message,
-                    title: "Welcome to our DB | Add a new Professor"
-                });
-            } else {
-
-                let query = "INSERT INTO `professor` (prof_id, class_no, first_name, last_name, rating) VALUES ('" +
-                prof_id + "', '" + class_no + "', '" + first_name + "', '" + last_name + "', '" + rating + "')";
+            if (result.length == 0) {
+                let query = "INSERT INTO `professor` (professor_id, first_name, last_name) VALUES ('" +
+                prof_id + "', '" + first_name + "', '" + last_name +  "')";
                 db.query(query, (err, result) => {
                     if (err) {
                         return res.status(500).send(err);
                     }
-                    res.redirect('/Professors');
                 });
-             }
+            }
+            let query2 = "INSERT INTO `reviews` (class_no, professor_id, rating, review) VALUES ('" + 
+            class_no + "', '" + prof_id + "', '" + rating + "', '" + review +  "')";
+            db.query(query2, (err, result) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                res.redirect('/Professors');
+            });
         });
 		}
 	};
