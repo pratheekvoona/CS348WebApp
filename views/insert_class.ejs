@@ -1,0 +1,21 @@
+<%- include ('partials/header.ejs'); -%>
+    <div class="container">
+        <% if (message != '') { %>
+            <p class="text-center text-danger"><%= message %></p>
+        <% } %>
+        <form class="add-player-form" action="" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" name="class_no" id="class_no" placeholder="Class Number" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" name="class_title" id="class_title" placeholder="Class Title" required>
+                </div>
+                
+            </div>
+            <button type="submit" class="btn btn-primary float-right">Add Class</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -7,6 +7,8 @@ const app = express();
 
 const {getHomePage} = require('./routes/index');
 const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');
+const {addClassPage, addClass} = require('./routes/class');
+const {getClassesPage} = require('./routes/view_classes')
 const port = 5000;
 
 // create connection to database
@@ -40,9 +42,12 @@ app.use(fileUpload()); // configure fileupload
 
 app.get('/', getHomePage);
 app.get('/add', addStudentPage);
+app.get('/addClass', addClassPage);
+app.get('/Classes', getClassesPage);
 app.get('/edit/:id', editStudentPage);
 app.get('/delete/:id', deleteStudent);
 app.post('/add', addStudent);
+app.post('/addClass', addClass);
 app.post('/edit/:id', editStudent);
 
 
