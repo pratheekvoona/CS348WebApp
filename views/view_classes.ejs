@@ -1,0 +1,30 @@
+<%- include("partials/header"); -%>
+    <div class="table-wrapper">
+        <% if (classes.length > 0) {%>
+            <table class="table table-hovered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Class Number</th>
+                        <th scope="col">Class Title </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% classes.forEach((classelem, index) => { %>
+                        <tr>
+                            <th scope="row"><%= classelem.class_no %></th>
+                            <td><%= classelem.class_title %></td>
+                            <td>
+                                <a href="/edit/<%= classelem.class_no %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Edit</a>
+                                <a href="/delete/<%= classelem.class_no %>" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="text-center">No Classes found. Go <a href="/addClass" >here</a> to add Classes.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

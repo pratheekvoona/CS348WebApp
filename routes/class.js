@@ -1,40 +1,40 @@
 const fs = require('fs');
 
 module.exports = {
-    addStudentPage: (req, res) => {
-        res.render('insert_student.ejs', {
-            title: "Welcome to our DB | Add a new Student"
+    addClassPage: (req, res) => {
+        res.render('insert_class.ejs', {
+            title: "Welcome to our DB | Add a new Class"
             ,message: ''
         });
     },
-    addStudent: (req, res) => {
+    addClass: (req, res) => {
 
         let message = '';
-        let puid = req.body.puid;
-        let student_name = req.body.student_name;
+        let class_no = req.body.class_no;
+        let class_title = req.body.class_title;
         
 
-        let puidQuery = "SELECT * FROM `student` WHERE puid ='" + puid + "' ";
+        let puidQuery = "SELECT * FROM `classes` WHERE class_no ='" + class_no + "' ";
 
         db.query(puidQuery, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
             }
             if (result.length > 0) {
-                message = 'PUID already exists';
-                res.render('insert_student.ejs', {
+                message = 'Class already exists';
+                res.render('insert_class.ejs', {
                     message,
-                    title: "Welcome to our DB | Add a new Student"
+                    title: "Welcome to our DB | Add a new Class"
                 });
             } else {
 
-                let query = "INSERT INTO `student` (puid, student_name) VALUES ('" +
-                puid + "', '" + student_name + "')";
+                let query = "INSERT INTO `classes` (class_no, class_title) VALUES ('" +
+                class_no + "', '" + class_title + "')";
                 db.query(query, (err, result) => {
                     if (err) {
                         return res.status(500).send(err);
                     }
-                    res.redirect('/');
+                    res.redirect('/Classes');
                 });
              }
         });
