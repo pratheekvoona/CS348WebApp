@@ -1,4 +1,6 @@
 const fs = require('fs');
+var { student } = require('../../cs348_project/app.js');
+console.log("Student is: ---------",student);
 
 module.exports = {
     addStudentPage: (req, res) => {
@@ -41,15 +43,22 @@ module.exports = {
     },
     editStudentPage: (req, res) => {
         let puid = req.params.id;
-        let query = "SELECT * FROM `student` WHERE puid = '" + puid + "' ";
-        db.query(query, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+        // let query = "SELECT * FROM `student` WHERE puid = '" + puid + "' ";
+        // db.query(query, (err, result) => {
+        //     if (err) {
+        //         return res.status(500).send(err);
+        //     }
+        //     res.render('edit_student.ejs', {
+        //         title: "Edit Student"
+        //         ,student: result[0]
+        //         ,message: ''
+        //     });
+        // });
+        student.findAll({where: {puid: puid}}).then(student => {
             res.render('edit_student.ejs', {
-                title: "Edit Student"
-                ,student: result[0]
-                ,message: ''
+                title: "Edit Student",
+                student: student[0],
+                message: ''
             });
         });
     },
@@ -59,13 +68,14 @@ module.exports = {
         let updated_student_puid = req.body.puid;
         
 
-        let query = "UPDATE `student` SET `puid` = '" + updated_student_puid + "', `student_name` = '" + student_name + "' WHERE `student`.`puid` = '" + puid + "'";
-        db.query(query, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.redirect('/');
-        });
+        // let query = "UPDATE `student` SET `puid` = '" + updated_student_puid + "', `student_name` = '" + student_name + "' WHERE `student`.`puid` = '" + puid + "'";
+        // db.query(query, (err, result) => {
+        //     if (err) {
+        //         return res.status(500).send(err);
+        //     }
+        //     res.redirect('/');
+        // });
+        
     },
 
     deleteStudent: (req, res) => {
