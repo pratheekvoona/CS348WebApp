@@ -1,0 +1,27 @@
+<%- include ('partials/header.ejs'); -%>
+<div class="container">
+    <% if (message) { %>
+        <p class="text-center text-danger"><%= message %></p>
+    <% } %>
+
+    <% if (student) { %>
+        <form class="add-player-form" action="" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="class_no">Class No</label>
+                    <input type="text" class="form-control" name="class_no" id="class_no" value="<%= student.class_no %>" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="study_link">Link to the Resource</label>
+                    <input type="text" class="form-control" name="study_link" id="study_link" value="<%= student.study_link %>" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success float-right">Update Resource</button>
+        </form>
+    <% } else { %>
+        <p class="text-center">Resource Not Found. Go <a href="/addStudy">here</a> to add resources..</p>
+    <% } %>
+</div>
+</div>
+</body>
+</html>

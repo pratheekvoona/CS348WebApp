@@ -9,12 +9,15 @@ const {getHomePage} = require('./routes/index');
 const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');
 const {addClassPage, addClass, editClassPage, editClass} = require('./routes/class');
 const {getClassesPage} = require('./routes/view_classes')
-const {addStudyPage, addStudy} = require('./routes/study');
+const {addStudyPage, addStudy, editStudyPage, editStudy} = require('./routes/study');
 const {addProfessorPage, addProfessor, editProfessor, editProfessorPage, editReviewPage, editReview, deleteProfessor} = require('./routes/professor');
 const {deleteReview} = require('./routes/professor');
 const {deleteClass} = require('./routes/class');
+const {deleteStudy} = require('./routes/study');
 const {getProfessorsPage} = require('./routes/view_professors')
 const {getReviewsPage} = require('./routes/view_reviews')
+const {getStudiesPage} = require('./routes/view_study')
+const {getAvgPage} = require('./routes/view_avg')
 const port = 5000;
 
 // create connection to database
@@ -54,18 +57,23 @@ app.get('/addStudy', addStudyPage);
 app.get('/editReview/:id', editReviewPage);
 app.get('/Classes', getClassesPage);
 app.get('/Reviews', getReviewsPage);
+app.get('/Average', getAvgPage);
 app.get('/Professors', getProfessorsPage);
+app.get('/Study', getStudiesPage);
 app.get('/edit/:id', editStudentPage);
+app.get('/editStudy/:id', editStudyPage);
 app.get('/editProfessor/:id', editProfessorPage);
 app.get('/delete/:id', deleteStudent);
 app.get('/deleteProfessor/:id', deleteProfessor);
 app.get('/deleteReview/:id', deleteReview);
 app.get('/deleteClass/:id', deleteClass);
+app.get('/deleteStudy/:id', deleteStudy);
 app.post('/add', addStudent);
 app.post('/addClass', addClass);
 app.post('/addStudy', addStudy);
 app.post('/addProfessor', addProfessor);
 app.post('/edit/:id', editStudent);
+app.post('/editStudy/:id', editStudy);
 app.post('/editProfessor/:id', editProfessor);
 app.post('/editReview/:id', editReview);
 app.get('/editClass/:id', editClassPage)

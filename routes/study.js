@@ -34,14 +34,14 @@ module.exports = {
                     if (err) {
                         return res.status(500).send(err);
                     }
-                    res.redirect('/');
+                    res.redirect('/Study');
                 });
              }
         });
     },
     editStudyPage: (req, res) => {
-        let puid = req.params.id;
-        let query = "SELECT * FROM `study` WHERE class_no = '" + puid + "' ";
+        let link = req.params.id;
+        let query = "SELECT * FROM `study` WHERE study_link = '" + link + "' ";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -53,25 +53,25 @@ module.exports = {
             });
         });
     },
-    editStudent: (req, res) => {
-        let puid = req.params.id;
-        let student_name = req.body.study_link;
+    editStudy: (req, res) => {
+        let link = req.params.id;
+        let study_link = req.body.study_link;
         let updated_student_puid = req.body.class_no;
         
 
-        let query = "UPDATE `study` SET `class_no` = '" + updated_student_puid + "', `study_link` = '" + student_name + "' WHERE `study`.`class_no` = '" + puid + "'";
+        let query = "UPDATE `study` SET `class_no` = '" + updated_student_puid + "', `study_link` = '" + study_link + "' WHERE `study`.`study_link` = '" + link + "'";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
             }
-            res.redirect('/');
+            res.redirect('/Study');
         });
     },
 
-    deleteStudent: (req, res) => {
-        let puid = req.params.id;
-        console.log("PuID is", class_no);
-        let deleteUserQuery = 'DELETE FROM study WHERE class_no = "' + puid +'"';
+    deleteStudy: (req, res) => {
+        let link = req.params.id;
+        console.log("PuID is", link);
+        let deleteUserQuery = 'DELETE FROM study WHERE study_link = "' + link +'"';
 
 
             
@@ -79,7 +79,7 @@ module.exports = {
             if (err) {
                 return res.status(500).send(err);
             }
-            res.redirect('/');
+            res.redirect('/Study');
         });     
         
     }
