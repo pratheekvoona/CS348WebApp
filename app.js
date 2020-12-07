@@ -56,7 +56,23 @@ sequelize
     }
   );
 
-  module.exports = { student: Student };
+  var Professor = sequelize.define(
+    "professor",
+    {
+      professor_id: Sequelize.INTEGER,
+      first_name: Sequelize.TEXT,
+      last_name: Sequelize.TEXT
+    },
+    {
+      timestamps: false,
+      paranoid: true,
+      underscored: true,
+      freezeTableName: true,
+      tableName: "professor",
+    }
+  );
+
+  module.exports = { student: Student, professor: Professor };
 
   const {getHomePage} = require('./routes/index');
 const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');

@@ -1,5 +1,5 @@
 const fs = require('fs');
-var { student } = require('../../cs348_project/app.js');
+var { student } = require('../app.js');
 console.log("Student is: ---------",student);
 
 module.exports = {
@@ -99,9 +99,9 @@ module.exports = {
         // });   
         student.findOne({where: {puid: puid}})
             .then(function(stud) {
-                stud.destroy();
-            });
-            res.redirect('/');
+                stud.destroy({});
+            }).then(res.redirect('/'));
+            
         
     }
  };

@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+var { professor } = require('../app.js');
 // TODO: Edit Class /editClass and Delete Class /deleteClass
 
 module.exports = {
@@ -46,15 +46,23 @@ module.exports = {
         },
         editProfessorPage: (req, res) => {
             let prof_id = req.params.id;
-            let query = "SELECT * FROM `professor` WHERE professor_id = '" + prof_id + "' ";
-            db.query(query, (err, result) => {
-                if (err) {
-                    return res.status(500).send(err);
-                }
-                res.render('edit_professor.ejs', {
-                    title: "Edit professor"
-                    ,professor: result[0]
-                    ,message: ''
+            //let query = "SELECT * FROM `professor` WHERE professor_id = '" + prof_id + "' ";
+            // db.query(query, (err, result) => {
+            //     if (err) {
+            //         return res.status(500).send(err);
+            //     }
+            //     res.render('edit_professor.ejs', {
+            //         title: "Edit professor"
+            //         ,professor: result[0]
+            //         ,message: ''
+            //     });
+            // });
+
+            professor.findAll({where: {professor_id: prof_id}}).then(professor => {
+                res.render('edit_student.ejs', {
+                    title: "Edit Student",
+                    professor: professor[0],
+                    message: ''
                 });
             });
         },
@@ -65,13 +73,21 @@ module.exports = {
             let updated_professor_last = req.body.last_name;
             
     
-            let query = "UPDATE `professor` SET `first_name` = '" + updated_professor_first + "', `last_name` = '" + updated_professor_last + "' WHERE `professor`.`professor_id` = '" + professor_id + "'";
-            db.query(query, (err, result) => {
-                if (err) {
-                    return res.status(500).send(err);
-                }
-                res.redirect('/Professors');
-            });
+            // let query = "UPDATE `professor` SET `first_name` = '" + updated_professor_first + "', `last_name` = '" + updated_professor_last + "' WHERE `professor`.`professor_id` = '" + professor_id + "'";
+            // db.query(query, (err, result) => {
+            //     if (err) {
+            //         return res.status(500).send(err);
+            //     }
+            //     res.redirect('/Professors');
+            // });
+
+            professor.findOne({where: {professor_id: professor_id}})
+            .then(function(prof) {
+                prof.update({
+                    first_name: updated_professor_first,
+                    last_name: updated_professor_last
+                });
+            }).then(res.redirect('/'));
         },
         editReviewPage: (req, res) => {
             let prof_id = req.params.id;
@@ -106,15 +122,19 @@ module.exports = {
         deleteProfessor: (req, res) => {
             let professor_id = req.params.id;
             console.log("Prof_id is", professor_id);
-            let deleteUserQuery = 'DELETE FROM professor WHERE professor_id = "' + professor_id +'"';
+            // let deleteUserQuery = 'DELETE FROM professor WHERE professor_id = "' + professor_id +'"';
             
                 
-            db.query(deleteUserQuery, (err, result) => {
-                if (err) {
-                    return res.status(500).send(err);
-                }
-                res.redirect('/Professors');
-            });     
+            // db.query(deleteUserQuery, (err, result) => {
+            //     if (err) {
+            //         return res.status(500).send(err);
+            //     }
+            //     res.redirect('/Professors');
+            // });    
+            professor.findOne({where: {professor_id: professor_id}})
+            .then(function(prof) {
+                prof.destroy({});
+            }).then(res.redirect('/')); 
             
         },
         deleteReview: (req, res) => {
