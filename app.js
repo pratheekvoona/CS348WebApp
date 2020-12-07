@@ -20,6 +20,7 @@ const {getStudiesPage} = require('./routes/view_study')
 const {getAvgPage} = require('./routes/view_avg')
 const {getAvgClassPage} = require('./routes/view_most')
 const {getMostClassPage} = require('./routes/view_most_prof')
+const {getTotPage} = require('./routes/view_total')
 const port = 5000;
 
 // create connection to database
@@ -62,6 +63,7 @@ app.get('/Reviews', getReviewsPage);
 app.get('/Average', getAvgPage);
 app.get('/AverageRat', getAvgClassPage);
 app.get('/MostRat', getMostClassPage);
+app.get('/TotClas', getTotPage);
 app.get('/Professors', getProfessorsPage);
 app.get('/Study', getStudiesPage);
 app.get('/edit/:id', editStudentPage);
