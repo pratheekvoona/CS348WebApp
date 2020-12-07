@@ -1,0 +1,37 @@
+<%- include("partials/header"); -%>
+    <div class="table-wrapper">
+        <% if (reviews.length > 0) {%>
+            <table class="table table-hovered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Class No</th>
+                                                <th scope="col">Professor Id</th>
+                                                <th scope="col">Rating</th>
+                                                <th scope="col">Review</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% reviews.forEach((review, index) => { %>
+                        <tr>
+                            <th scope="row"><%= review.id %></th>
+                            <th scope="row"><%= review.class_no %></th>
+                                                        <td><%= review.professor_id %></td>
+                                                        <td><%= review.rating %></td>
+                                                        <td><%= review.review %></td>
+                            <td>
+                                <a href="/editReview/<%= review.professor_id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Edit</a>
+                                <a href="/deleteReview/<%= review.id %>" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+        <% } else { %>
+            <p class="text-center">No Reviews found. Go <a href="/addProfessor" >here</a> to add Reviews.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

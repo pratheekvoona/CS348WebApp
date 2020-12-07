@@ -69,4 +69,19 @@ module.exports = {
                 res.redirect('/');
             });
         },
+        deleteClass: (req, res) => {
+            let id = req.params.id;
+            console.log("Class_no is", id);
+            let deleteUserQuery = 'DELETE FROM class WHERE class_no = "' + id +'"';
+            
+                
+            db.query(deleteUserQuery, (err, result) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                res.redirect('/Classes');
+            });     
+            
+        }
+
 	};
