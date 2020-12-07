@@ -1,0 +1,35 @@
+<%- include("partials/header"); -%>
+    <div class="table-wrapper">
+        <% if (avgs.length > 0) {%>
+            <table class="table table-hovered">
+                <thead class="thead-dark">
+                    <tr>
+                        
+                        <th scope="col">Professor_id</th>
+                                                <th scope="col">First Name</th>
+                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Average Rating</th>
+                                                
+                    </tr>
+                </thead>
+                <tbody>
+                    <% avgs.forEach((study_len, index) => { %>
+                        <tr>
+                            <th scope="row"><%= study_len.professor_id %></th>
+                            
+                                                        <td><%= study_len.first_name %></td>
+                                                        <td><%= study_len.last_name %></td>
+                                                        <td><%= study_len.average_rating %></td>
+                                                        
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+        <% } else { %>
+            <p class="text-center">No Averages found. Go <a href="/addProfessor" >here</a> to add Ratings.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

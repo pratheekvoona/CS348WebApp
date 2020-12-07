@@ -1,6 +1,6 @@
 module.exports = {
 	getReviewsPage: (req, res) => {
-			let query = "SELECT * FROM `reviews`"; // query database to get all the professors
+			let query = "SELECT * FROM `reviews` order by class_no desc"; // query database to get all the professors
 
 			// execute query
 			db.query(query, (err, result) => {
