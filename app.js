@@ -8,26 +8,7 @@ var env = process.env.NODE_ENV || "development";
 var config = require("./config/config.json")[env];
 const app = express();
 
-<<<<<<< HEAD
 
-=======
-const {getHomePage} = require('./routes/index');
-const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');
-const {addClassPage, addClass, editClassPage, editClass} = require('./routes/class');
-const {getClassesPage} = require('./routes/view_classes')
-const {addStudyPage, addStudy, editStudyPage, editStudy} = require('./routes/study');
-const {addProfessorPage, addProfessor, editProfessor, editProfessorPage, editReviewPage, editReview, deleteProfessor} = require('./routes/professor');
-const {deleteReview} = require('./routes/professor');
-const {deleteClass} = require('./routes/class');
-const {deleteStudy} = require('./routes/study');
-const {getProfessorsPage} = require('./routes/view_professors')
-const {getReviewsPage} = require('./routes/view_reviews')
-const {getStudiesPage} = require('./routes/view_study')
-const {getAvgPage} = require('./routes/view_avg')
-const {getAvgClassPage} = require('./routes/view_most')
-const {getMostClassPage} = require('./routes/view_most_prof')
-const {getTotPage} = require('./routes/view_total')
->>>>>>> 64fc98a4ecb7beb69bb79472ac695e00ca0391f4
 const port = 5000;
 
 // create connection to database
@@ -76,44 +57,61 @@ sequelize
   );
 
   module.exports = { student: Student };
+
+  const {getHomePage} = require('./routes/index');
+const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');
+const {addClassPage, addClass, editClassPage, editClass} = require('./routes/class');
+const {getClassesPage} = require('./routes/view_classes')
+const {addStudyPage, addStudy, editStudyPage, editStudy} = require('./routes/study');
+const {addProfessorPage, addProfessor, editProfessor, editProfessorPage, editReviewPage, editReview, deleteProfessor} = require('./routes/professor');
+const {deleteReview} = require('./routes/professor');
+const {deleteClass} = require('./routes/class');
+const {deleteStudy} = require('./routes/study');
+const {getProfessorsPage} = require('./routes/view_professors')
+const {getReviewsPage} = require('./routes/view_reviews')
+const {getStudiesPage} = require('./routes/view_study')
+const {getAvgPage} = require('./routes/view_avg')
+const {getAvgClassPage} = require('./routes/view_most')
+const {getMostClassPage} = require('./routes/view_most_prof')
+const {getTotPage} = require('./routes/view_total')
  
-  const { getHomePage } = require("./routes/index");
-const {
-  addStudentPage,
-  addStudent,
-  deleteStudent,
-  editStudent,
-  editStudentPage,
-} = require("./routes/student");
-const {
-  addClassPage,
-  addClass,
-  editClassPage,
-  editClass,
-} = require("./routes/class");
-const { getClassesPage } = require("./routes/view_classes");
-const {
-  addStudyPage,
-  addStudy,
-  editStudyPage,
-  editStudy,
-} = require("./routes/study");
-const {
-  addProfessorPage,
-  addProfessor,
-  editProfessor,
-  editProfessorPage,
-  editReviewPage,
-  editReview,
-  deleteProfessor,
-} = require("./routes/professor");
-const { deleteReview } = require("./routes/professor");
-const { deleteClass } = require("./routes/class");
-const { deleteStudy } = require("./routes/study");
-const { getProfessorsPage } = require("./routes/view_professors");
-const { getReviewsPage } = require("./routes/view_reviews");
-const { getStudiesPage } = require("./routes/view_study");
-const { getAvgPage } = require("./routes/view_avg");
+//   const { getHomePage } = require("./routes/index");
+// const {
+//   addStudentPage,
+//   addStudent,
+//   deleteStudent,
+//   editStudent,
+//   editStudentPage,
+// } = require("./routes/student");
+// const {
+//   addClassPage,
+//   addClass,
+//   editClassPage,
+//   editClass,
+// } = require("./routes/class");
+// const { getClassesPage } = require("./routes/view_classes");
+// const {
+//   addStudyPage,
+//   addStudy,
+//   editStudyPage,
+//   editStudy,
+// } = require("./routes/study");
+// const {
+//   addProfessorPage,
+//   addProfessor,
+//   editProfessor,
+//   editProfessorPage,
+//   editReviewPage,
+//   editReview,
+//   deleteProfessor,
+// } = require("./routes/professor");
+// const { deleteReview } = require("./routes/professor");
+// const { deleteClass } = require("./routes/class");
+// const { deleteStudy } = require("./routes/study");
+// const { getProfessorsPage } = require("./routes/view_professors");
+// const { getReviewsPage } = require("./routes/view_reviews");
+// const { getStudiesPage } = require("./routes/view_study");
+// const { getAvgPage } = require("./routes/view_avg");
 
 
 //   Student.bulkCreate([{ puid: 100, student_name: "ANUJ" }])

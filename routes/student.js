@@ -75,22 +75,33 @@ module.exports = {
         //     }
         //     res.redirect('/');
         // });
-        
+        student.findOne({where: {puid: puid}})
+            .then(function(stud) {
+                stud.update({
+                    puid: updated_student_puid,
+                    student_name: student_name
+                });
+            }).then(res.redirect('/'));
     },
 
     deleteStudent: (req, res) => {
         let puid = req.params.id;
         console.log("PuID is", puid);
-        let deleteUserQuery = 'DELETE FROM student WHERE puid = "' + puid +'"';
+        // let deleteUserQuery = 'DELETE FROM student WHERE puid = "' + puid +'"';
 
 
             
-        db.query(deleteUserQuery, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+        // db.query(deleteUserQuery, (err, result) => {
+        //     if (err) {
+        //         return res.status(500).send(err);
+        //     }
+        //     res.redirect('/');
+        // });   
+        student.findOne({where: {puid: puid}})
+            .then(function(stud) {
+                stud.destroy();
+            });
             res.redirect('/');
-        });     
         
     }
  };
