@@ -1,0 +1,33 @@
+<%- include("partials/header"); -%>
+    <div class="table-wrapper">
+        <% if (avgsrat.length > 0) {%>
+            <table class="table table-hovered">
+                <thead class="thead-dark">
+                    <tr>
+                        
+                        <th scope="col">Class No</th>
+                                                
+                                                <th scope="col">Average Rating</th>
+                                                
+                    </tr>
+                </thead>
+                <tbody>
+                    <% avgsrat.forEach((study_len, index) => { %>
+                        <tr>
+                            <th scope="row"><%= study_len.class_no %></th>
+                            
+                                                
+                                                        <td><%= study_len.average_rating %></td>
+                                                        
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+        <% } else { %>
+            <p class="text-center">No Averages found. Go <a href="/addProfessor" >here</a> to add Ratings.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>
