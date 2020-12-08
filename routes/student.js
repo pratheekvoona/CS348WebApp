@@ -30,9 +30,10 @@ module.exports = {
                 });
             } else {
 
-                let query = "INSERT INTO `student` (puid, student_name) VALUES ('" +
-                puid + "', '" + student_name + "')";
-                db.query(query, (err, result) => {
+                // let query = "INSERT INTO `student` (puid, student_name) VALUES ('" +
+                // puid + "', '" + student_name + "')";
+                let query = "INSERT INTO `student` (puid, student_name) VALUES (?,?)";
+                db.query(query,[puid, student_name], (err, result) => {
                     if (err) {
                         return res.status(500).send(err);
                     }

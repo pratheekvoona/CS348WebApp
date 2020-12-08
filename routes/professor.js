@@ -26,17 +26,19 @@ module.exports = {
                 return res.status(500).send(err);
             }
             if (result.length == 0) {
-                let query = "INSERT INTO `professor` (professor_id, first_name, last_name) VALUES ('" +
-                prof_id + "', '" + first_name + "', '" + last_name +  "')";
-                db.query(query, (err, result) => {
+                // let query = "INSERT INTO `professor` (professor_id, first_name, last_name) VALUES ('" +
+                // prof_id + "', '" + first_name + "', '" + last_name +  "')";
+                let query = "INSERT INTO `professor` (professor_id, first_name, last_name) VALUES (?,?,?)";
+                db.query(query, [prof_id, first_name, last_name], (err, result) => {
                     if (err) {
                         return res.status(500).send(err);
                     }
                 });
             }
-            let query2 = "INSERT INTO `reviews` (class_no, professor_id, rating, review) VALUES ('" + 
-            class_no + "', '" + prof_id + "', '" + rating + "', '" + review +  "')";
-            db.query(query2, (err, result) => {
+            // let query2 = "INSERT INTO `reviews` (class_no, professor_id, rating, review) VALUES ('" + 
+            // class_no + "', '" + prof_id + "', '" + rating + "', '" + review +  "')";
+            let query2 = "INSERT INTO `reviews` (class_no, professor_id, rating, review) VALUES (?,?,?,?)";
+            db.query(query2, [class_no, prof_id, rating, review], (err, result) => {
                 if (err) {
                     return res.status(500).send(err);
                 }
@@ -110,8 +112,9 @@ module.exports = {
             let updated_class_no = req.body.class_no;
             
     
-            let query = "UPDATE `reviews` SET `rating` = '" + updated_rating + "', `review` = '" + updated_review + "' WHERE `reviews`.`professor_id` = '" + professor_id + "' AND `reviews`.`class_no` = '" + updated_class_no + "'";
-            db.query(query, (err, result) => {
+            // let query = "UPDATE `reviews` SET `rating` = '" + updated_rating + "', `review` = '" + updated_review + "' WHERE `reviews`.`professor_id` = '" + professor_id + "' AND `reviews`.`class_no` = '" + updated_class_no + "'";
+            let query = "UPDATE `reviews` SET `rating` = ?, `review` = ? WHERE `reviews`.`professor_id` = ? AND `reviews`.`class_no` = ?";
+            db.query(query, [updated_rating, updated_review, professor_id, updated_class_no], (err, result) => {
                 if (err) {
                     return res.status(500).send(err);
                 }
