@@ -17,28 +17,48 @@ module.exports = {
         
 
         let puidQuery = "SELECT * FROM `class` WHERE class_no ='" + class_no + "' ";
-
-        db.query(puidQuery, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            if (result.length > 0) {
-                message = 'Class already exists';
-                res.render('insert_class.ejs', {
-                    message,
-                    title: "Welcome to our DB | Add a new Class"
-                });
-            } else {
-
-                let query = "INSERT INTO `class` (class_no, class_title) VALUES (?,?)";
-                db.query(query, [class_no, class_title], (err, result) => {
+        
+            db.beginTransaction(function(err) {
+                if (err) { //Transaction Error (Rollback and release db)
+                    db.rollback(function() {
+                        
+                        reject( err);
+                    });
+                }
+                db.query(puidQuery, (err, result) => {
                     if (err) {
                         return res.status(500).send(err);
                     }
-                    res.redirect('/Classes');
+                    if (result.length > 0) {
+                        message = 'Class already exists';
+                        res.render('insert_class.ejs', {
+                            message,
+                            title: "Welcome to our DB | Add a new Class"
+                        });
+                    } else {
+
+                        let query = "INSERT INTO `class` (class_no, class_title) VALUES (?,?)";
+                        db.query(query, [class_no, class_title], (err, result) => {
+                            if (err) {
+                                return res.status(500).send(err);
+                            }
+                            res.redirect('/Classes');
+                        });
+                    }
+                    db.commit(function(commitErr) {
+                        if (commitErr) {
+                            db.rollback(function() {
+                                
+                                reject(commitErr);
+                            });
+                        }
+                        
+                    });
                 });
-             }
-        });
+            });
+        
+            
+            
         },
         editClassPage: (req, res) => {
             let class_no = req.params.id;
@@ -75,14 +95,31 @@ module.exports = {
             //     }
             //     res.redirect('/Classes');
             // });
-
-            class_var.findOne({where: {class_no: class_no}})
-            .then(function(clas) {
+            db.beginTransaction(function(err) {
+                if (err) { //Transaction Error (Rollback and release db)
+                    db.rollback(function() {
+                        
+                        reject( err);
+                    });
+                }
+                class_var.findOne({where: {class_no: class_no}})
+                .then(function(clas) {
                 clas.update({
                     class_no: updated_class_no,
                     class_title: class_title
                 });
+                db.commit(function(commitErr) {
+                    if (commitErr) {
+                        db.rollback(function() {
+                            
+                            reject(commitErr);
+                        });
+                    }
+                    
+                });
             }).then(res.redirect('/Classes'))
+            });
+            
         },
         deleteClass: (req, res) => {
             let id = req.params.id;
@@ -96,11 +133,29 @@ module.exports = {
             //     }
             //     res.redirect('/Classes');
             // });    
-            
-            class_var.findOne({where: {class_no: id}, attributes: {exclude: ['id']}})
+            db.beginTransaction(function(err) {
+                if (err) { //Transaction Error (Rollback and release db)
+                    db.rollback(function() {
+                        
+                        reject( err);
+                    });
+                }
+                class_var.findOne({where: {class_no: id}, attributes: {exclude: ['id']}})
             .then(function(clas) {
                 clas.destroy({});
-            }).then(res.redirect('/Classes'));
+                db.commit(function(commitErr) {
+                    if (commitErr) {
+                        db.rollback(function() {
+                            
+                            reject(commitErr);
+                        });
+                    }
+                    
+                });
+            }).then(res.redirect('/Classes'))
+            });
+            
+            
             
         }
 

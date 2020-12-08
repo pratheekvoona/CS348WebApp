@@ -17,30 +17,48 @@ module.exports = {
         
 
         let puidQuery = "SELECT * FROM `student` WHERE puid ='" + puid + "' ";
-
-        db.query(puidQuery, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
+        db.beginTransaction(function(err) {
+            if (err) { //Transaction Error (Rollback and release db)
+                db.rollback(function() {
+                    
+                    reject( err);
+                });
             }
-            if (result.length > 0) {
-                message = 'PUID already exists';
-                res.render('insert_student.ejs', {
-                    message,
-                    title: "Welcome to our DB | Add a new Student"
-                });
-            } else {
-
-                // let query = "INSERT INTO `student` (puid, student_name) VALUES ('" +
-                // puid + "', '" + student_name + "')";
-                let query = "INSERT INTO `student` (puid, student_name) VALUES (?,?)";
-                db.query(query,[puid, student_name], (err, result) => {
-                    if (err) {
-                        return res.status(500).send(err);
+            db.query(puidQuery, (err, result) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                if (result.length > 0) {
+                    message = 'PUID already exists';
+                    res.render('insert_student.ejs', {
+                        message,
+                        title: "Welcome to our DB | Add a new Student"
+                    });
+                } else {
+    
+                    // let query = "INSERT INTO `student` (puid, student_name) VALUES ('" +
+                    // puid + "', '" + student_name + "')";
+                    let query = "INSERT INTO `student` (puid, student_name) VALUES (?,?)";
+                    db.query(query,[puid, student_name], (err, result) => {
+                        if (err) {
+                            return res.status(500).send(err);
+                        }
+                        res.redirect('/');
+                    });
+                 }
+                db.commit(function(commitErr) {
+                    if (commitErr) {
+                        db.rollback(function() {
+                            
+                            reject(commitErr);
+                        });
                     }
-                    res.redirect('/');
+                    
                 });
-             }
+            });
         });
+        
+        
     },
     editStudentPage: (req, res) => {
         let puid = req.params.id;
@@ -76,13 +94,32 @@ module.exports = {
         //     }
         //     res.redirect('/');
         // });
-        student.findOne({where: {puid: puid}})
+        db.beginTransaction(function(err) {
+            if (err) { //Transaction Error (Rollback and release db)
+                db.rollback(function() {
+                    
+                    reject( err);
+                });
+            }
+            student.findOne({where: {puid: puid}})
             .then(function(stud) {
                 stud.update({
                     puid: updated_student_puid,
                     student_name: student_name
                 });
-            }).then(res.redirect('/'));
+            db.commit(function(commitErr) {
+                if (commitErr) {
+                    db.rollback(function() {
+                        
+                        reject(commitErr);
+                    });
+                }
+                
+            });
+        }).then(res.redirect('/'));
+        });  
+        
+            
     },
 
     deleteStudent: (req, res) => {
@@ -98,10 +135,29 @@ module.exports = {
         //     }
         //     res.redirect('/');
         // });   
-        student.findOne({where: {puid: puid}})
+        db.beginTransaction(function(err) {
+            if (err) { //Transaction Error (Rollback and release db)
+                db.rollback(function() {
+                    
+                    reject( err);
+                });
+            }
+            student.findOne({where: {puid: puid}})
             .then(function(stud) {
                 stud.destroy({});
-            }).then(res.redirect('/'));
+            db.commit(function(commitErr) {
+                if (commitErr) {
+                    db.rollback(function() {
+                        
+                        reject(commitErr);
+                    });
+                }
+                
+            });
+        }).then(res.redirect('/'));
+        });  
+        
+            
             
         
     }

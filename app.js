@@ -9,7 +9,7 @@ var config = require("./config/config.json")[env];
 const app = express();
 
 
-const port = 5000;
+const port = 1234;
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.

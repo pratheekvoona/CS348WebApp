@@ -20,31 +20,50 @@ module.exports = {
         let review = req.body.review;
 
         let profQuery = "SELECT * FROM `professor` WHERE professor_id ='" + prof_id + "' ";
-        
-        db.query(profQuery, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            if (result.length == 0) {
-                // let query = "INSERT INTO `professor` (professor_id, first_name, last_name) VALUES ('" +
-                // prof_id + "', '" + first_name + "', '" + last_name +  "')";
-                let query = "INSERT INTO `professor` (professor_id, first_name, last_name) VALUES (?,?,?)";
-                db.query(query, [prof_id, first_name, last_name], (err, result) => {
-                    if (err) {
-                        return res.status(500).send(err);
-                    }
+        db.beginTransaction(function(err) {
+            if (err) { //Transaction Error (Rollback and release db)
+                db.rollback(function() {
+                    
+                    reject( err);
                 });
             }
-            // let query2 = "INSERT INTO `reviews` (class_no, professor_id, rating, review) VALUES ('" + 
-            // class_no + "', '" + prof_id + "', '" + rating + "', '" + review +  "')";
-            let query2 = "INSERT INTO `reviews` (class_no, professor_id, rating, review) VALUES (?,?,?,?)";
-            db.query(query2, [class_no, prof_id, rating, review], (err, result) => {
+            db.query(profQuery, (err, result) => {
                 if (err) {
                     return res.status(500).send(err);
                 }
-                res.redirect('/Professors');
+                if (result.length == 0) {
+                    // let query = "INSERT INTO `professor` (professor_id, first_name, last_name) VALUES ('" +
+                    // prof_id + "', '" + first_name + "', '" + last_name +  "')";
+                    let query = "INSERT INTO `professor` (professor_id, first_name, last_name) VALUES (?,?,?)";
+                    db.query(query, [prof_id, first_name, last_name], (err, result) => {
+                        if (err) {
+                            return res.status(500).send(err);
+                        }
+                    });
+                }
+                // let query2 = "INSERT INTO `reviews` (class_no, professor_id, rating, review) VALUES ('" + 
+                // class_no + "', '" + prof_id + "', '" + rating + "', '" + review +  "')";
+                let query2 = "INSERT INTO `reviews` (class_no, professor_id, rating, review) VALUES (?,?,?,?)";
+                db.query(query2, [class_no, prof_id, rating, review], (err, result) => {
+                    if (err) {
+                        return res.status(500).send(err);
+                    }
+                    res.redirect('/Professors');
+                });
+                db.commit(function(commitErr) {
+                    if (commitErr) {
+                        db.rollback(function() {
+                            
+                            reject(commitErr);
+                        });
+                    }
+                    
+                });
             });
+            
         });
+    
+        
         },
         editProfessorPage: (req, res) => {
             let prof_id = req.params.id;
@@ -82,14 +101,32 @@ module.exports = {
             //     }
             //     res.redirect('/Professors');
             // });
-
-            professor.findOne({where: {professor_id: professor_id}})
+            db.beginTransaction(function(err) {
+                if (err) { //Transaction Error (Rollback and release db)
+                    db.rollback(function() {
+                        
+                        reject( err);
+                    });
+                }
+                professor.findOne({where: {professor_id: professor_id}})
             .then(function(prof) {
                 prof.update({
                     first_name: updated_professor_first,
                     last_name: updated_professor_last
                 });
+                db.commit(function(commitErr) {
+                    if (commitErr) {
+                        db.rollback(function() {
+                            
+                            reject(commitErr);
+                        });
+                    }
+                    
+                });
             }).then(res.redirect('/Professors'));
+            });
+            
+            
         },
         editReviewPage: (req, res) => {
             let prof_id = req.params.id;
@@ -133,11 +170,30 @@ module.exports = {
             //         return res.status(500).send(err);
             //     }
             //     res.redirect('/Professors');
-            // });    
-            professor.findOne({where: {professor_id: professor_id}})
+            // }); 
+            db.beginTransaction(function(err) {
+                if (err) { //Transaction Error (Rollback and release db)
+                    db.rollback(function() {
+                        
+                        reject( err);
+                    });
+                }
+                professor.findOne({where: {professor_id: professor_id}})
             .then(function(prof) {
                 prof.destroy({});
-            }).then(res.redirect('/Professors')); 
+                db.commit(function(commitErr) {
+                    if (commitErr) {
+                        db.rollback(function() {
+                            
+                            reject(commitErr);
+                        });
+                    }
+                    
+                });
+            }).then(res.redirect('/Professors'));
+            });   
+            
+            
             
         },
         deleteReview: (req, res) => {
