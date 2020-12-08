@@ -9,7 +9,7 @@ var config = require("./config/config.json")[env];
 const app = express();
 
 
-const port = 5000;
+const port = 1234;
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
@@ -126,7 +126,7 @@ const {getAvgPage} = require('./routes/view_avg')
 const {getAvgClassPage} = require('./routes/view_most')
 const {getMostClassPage} = require('./routes/view_most_prof')
 const {getTotPage} = require('./routes/view_total')
- 
+const {getHome} = require('./routes/homepage')
 //   const { getHomePage } = require("./routes/index");
 // const {
 //   addStudentPage,
@@ -196,6 +196,7 @@ app.use(fileUpload()); // configure fileupload
 // routes for the app
 
 app.get('/', getHomePage);
+app.get('/home', getHome);
 app.get('/add', addStudentPage);
 app.get('/addClass', addClassPage);
 app.get('/addProfessor', addProfessorPage);

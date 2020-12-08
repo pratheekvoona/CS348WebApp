@@ -1,41 +1,98 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+    <a class="float-left" href="/home" title="Title">Student Database</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a class="float-left" href="/add" title="Add a New Student">Add a Student</a>
+    <a class="float-left" href="/addClass" title="Add a New Class">Add a Class</a>
+    <a class="float-left" href="/addStudy" title="Add a New Resource to a class">Add a Link to a study resource</a>
+    <a class="float-left" href="/addProfessor" title="Add a New Professor">Add a Professor</a>
+    <a class="float-left" href="/" title="View Classes">View Students</a>
+    <a class="float-left" href="/Classes" title="View Classes">View Classes</a>
+    <a class="float-left" href="/Professors" title="View Professors">View Professors</a>
+    <a class="float-left" href="/Reviews" title="View Reviews">View Reviews</a>
+    <a class="float-left" href="/Study" title="View Resources">View Resources</a>
+    <a class="float-left" href="/Average" title="Average">Average Rating of a Professor</a>
+    <a class="float-left" href="/AverageRat" title="Average">Average Rating of a Class</a>
+    <a class="float-left" href="/MostRat" title="Most">Number of Reviews of a Class</a>
+    <a class="float-left" href="/TotClas" title="Total">Total number of Classes</a>
+</div>
+
+<div id="main">
+  <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+  <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title><%= title %></title>
-</head>
-<style>
-    .table-wrapper {
-        margin-top: 50px;
-    }
+</div>
 
-    .player-img {
-        width: 40px;
-        height: 40px;
-    }
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
 
-    .add-player-form {
-        margin-top: 50px;
-    }
-</style>
-<body>
-<div class="page-wrapper">
-    <nav class="navbar navbar-light bg-light">
-        <span class="navbar-brand mb-0 h1" ><a href="/">Students DB</a></span>
-        <a class="float-right" href="/add" title="Add a New Student">Add a Student</a>
-        <a class="float-right" href="/addClass" title="Add a New Class">Add a Class</a>
-        <a class="float-right" href="/addStudy" title="Add a New Resource to a class">Add a Link_to_a_study_resource</a>
-        <a class="float-right" href="/addProfessor" title="Add a New Professor">Add a Professor</a>
-        <a class="float-right" href="/Classes" title="View Classes">View Classes</a>
-        <a class="float-right" href="/Professors" title="View Professors">View Professors</a>
-        <a class="float-right" href="/Reviews" title="View Reviews">View Reviews</a>
-        <a class="float-right" href="/Study" title="View Resources">View Resources</a>
-        <a class="float-right" href="/Average" title="Average">Average Rating of a Professor</a>
-        <a class="float-right" href="/AverageRat" title="Average">Average Rating of a Class</a>
-        <a class="float-right" href="/MostRat" title="Most">Number of Reviews of a Class</a>
-        <a class="float-right" href="/TotClas" title="Total">Total number of Classes</a>
-    </nav>
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+   
+</body>
+</html> 
