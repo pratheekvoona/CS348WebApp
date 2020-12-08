@@ -59,8 +59,8 @@ module.exports = {
             // });
 
             professor.findAll({where: {professor_id: prof_id}}).then(professor => {
-                res.render('edit_student.ejs', {
-                    title: "Edit Student",
+                res.render('edit_professor.ejs', {
+                    title: "Edit Professor",
                     professor: professor[0],
                     message: ''
                 });
