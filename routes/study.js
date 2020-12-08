@@ -23,6 +23,7 @@ module.exports = {
                     reject( err);
                 });
             }
+            db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
             db.query(puidQuery, (err, result) => {
                 if (err) {
                     return res.status(500).send(err);
@@ -54,7 +55,7 @@ module.exports = {
                     }
                     
                 });
-            });
+            });});
         });
         
         
@@ -101,6 +102,7 @@ module.exports = {
                     reject( err);
                 });
             }
+            db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
             study.findOne({where: {study_link: link}})
             .then(function(prof) {
                 prof.update({
@@ -117,7 +119,7 @@ module.exports = {
                 
             });
         }).then(res.redirect('/Study'));
-        });  
+        });  });
         
            
     },
@@ -142,6 +144,7 @@ module.exports = {
                     reject( err);
                 });
             }
+            db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
             study.findOne({where: {study_link: link}})
             .then(function(mat) {
                 mat.destroy({});
@@ -155,7 +158,7 @@ module.exports = {
                 
             });
         }).then(res.redirect('/'));
-        });     
+        }); });
         
             
     }

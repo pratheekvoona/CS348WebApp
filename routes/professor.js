@@ -27,6 +27,7 @@ module.exports = {
                     reject( err);
                 });
             }
+            db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
             db.query(profQuery, (err, result) => {
                 if (err) {
                     return res.status(500).send(err);
@@ -61,7 +62,7 @@ module.exports = {
                 });
             });
             
-        });
+        });});
     
         
         },
@@ -108,6 +109,7 @@ module.exports = {
                         reject( err);
                     });
                 }
+                db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
                 professor.findOne({where: {professor_id: professor_id}})
             .then(function(prof) {
                 prof.update({
@@ -124,13 +126,14 @@ module.exports = {
                     
                 });
             }).then(res.redirect('/Professors'));
-            });
+            });});
             
             
         },
         editReviewPage: (req, res) => {
             let prof_id = req.params.id;
             let query = "SELECT * FROM `reviews` WHERE professor_id = '" + prof_id + "' ";
+
             db.query(query, (err, result) => {
                 if (err) {
                     return res.status(500).send(err);
@@ -178,6 +181,7 @@ module.exports = {
                         reject( err);
                     });
                 }
+                db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
                 professor.findOne({where: {professor_id: professor_id}})
             .then(function(prof) {
                 prof.destroy({});
@@ -191,7 +195,7 @@ module.exports = {
                     
                 });
             }).then(res.redirect('/Professors'));
-            });   
+            });   });   
             
             
             

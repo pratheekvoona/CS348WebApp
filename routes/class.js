@@ -25,6 +25,7 @@ module.exports = {
                         reject( err);
                     });
                 }
+                db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
                 db.query(puidQuery, (err, result) => {
                     if (err) {
                         return res.status(500).send(err);
@@ -56,6 +57,7 @@ module.exports = {
                     });
                 });
             });
+        });
         
             
             
@@ -102,6 +104,7 @@ module.exports = {
                         reject( err);
                     });
                 }
+                db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
                 class_var.findOne({where: {class_no: class_no}})
                 .then(function(clas) {
                 clas.update({
@@ -118,7 +121,7 @@ module.exports = {
                     
                 });
             }).then(res.redirect('/Classes'))
-            });
+            });});
             
         },
         deleteClass: (req, res) => {
@@ -140,6 +143,7 @@ module.exports = {
                         reject( err);
                     });
                 }
+                db.query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED', function(err) {
                 class_var.findOne({where: {class_no: id}, attributes: {exclude: ['id']}})
             .then(function(clas) {
                 clas.destroy({});
@@ -153,7 +157,7 @@ module.exports = {
                     
                 });
             }).then(res.redirect('/Classes'))
-            });
+            });});
             
             
             
