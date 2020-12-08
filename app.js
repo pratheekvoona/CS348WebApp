@@ -72,7 +72,43 @@ sequelize
     }
   );
 
-  module.exports = { student: Student, professor: Professor };
+  var Class = sequelize.define(
+    "class",
+    {
+      class_no: Sequelize.INTEGER,
+      class_title: Sequelize.TEXT,
+    },
+    {
+      timestamps: false,
+      paranoid: true,
+      underscored: true,
+      freezeTableName: true,
+      tableName: "class",
+    }
+  );
+
+  var Study = sequelize.define(
+    "study",
+    {
+      class_no: Sequelize.INTEGER,
+      study_link: Sequelize.TEXT,
+    },
+    {
+      timestamps: false,
+      paranoid: true,
+      underscored: true,
+      freezeTableName: true,
+      tableName: "study",
+    }
+  );
+
+  Student.removeAttribute('id');
+  Professor.removeAttribute('id');
+  Class.removeAttribute('id');
+  Study.removeAttribute('id');
+
+
+  module.exports = { student: Student, professor: Professor, class_var: Class, study: Study };
 
   const {getHomePage} = require('./routes/index');
 const {addStudentPage, addStudent, deleteStudent, editStudent, editStudentPage} = require('./routes/student');

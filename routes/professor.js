@@ -87,7 +87,7 @@ module.exports = {
                     first_name: updated_professor_first,
                     last_name: updated_professor_last
                 });
-            }).then(res.redirect('/'));
+            }).then(res.redirect('/Professors'));
         },
         editReviewPage: (req, res) => {
             let prof_id = req.params.id;
@@ -134,7 +134,7 @@ module.exports = {
             professor.findOne({where: {professor_id: professor_id}})
             .then(function(prof) {
                 prof.destroy({});
-            }).then(res.redirect('/')); 
+            }).then(res.redirect('/Professors')); 
             
         },
         deleteReview: (req, res) => {

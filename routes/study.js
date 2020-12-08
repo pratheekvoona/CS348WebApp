@@ -1,4 +1,5 @@
 const fs = require('fs');
+var { study } = require('../app.js');
 
 module.exports = {
     addStudyPage: (req, res) => {
@@ -41,15 +42,22 @@ module.exports = {
     },
     editStudyPage: (req, res) => {
         let link = req.params.id;
-        let query = "SELECT * FROM `study` WHERE study_link = '" + link + "' ";
-        db.query(query, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+        // let query = "SELECT * FROM `study` WHERE study_link = '" + link + "' ";
+        // db.query(query, (err, result) => {
+        //     if (err) {
+        //         return res.status(500).send(err);
+        //     }
+        //     res.render('edit_study.ejs', {
+        //         title: "Edit Study"
+        //         ,student: result[0]
+        //         ,message: ''
+        //     });
+        // });
+        study.findAll({where: {study_link   : link}}).then(mat => {
             res.render('edit_study.ejs', {
-                title: "Edit Study"
-                ,student: result[0]
-                ,message: ''
+                title: "Edit Study",
+                student: mat[0],
+                message: ''
             });
         });
     },
@@ -59,28 +67,39 @@ module.exports = {
         let updated_student_puid = req.body.class_no;
         
 
-        let query = "UPDATE `study` SET `class_no` = '" + updated_student_puid + "', `study_link` = '" + study_link + "' WHERE `study`.`study_link` = '" + link + "'";
-        db.query(query, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.redirect('/Study');
-        });
+        // let query = "UPDATE `study` SET `class_no` = '" + updated_student_puid + "', `study_link` = '" + study_link + "' WHERE `study`.`study_link` = '" + link + "'";
+        // db.query(query, (err, result) => {
+        //     if (err) {
+        //         return res.status(500).send(err);
+        //     }
+        //     res.redirect('/Study');
+        // });
+
+        study.findOne({where: {study_link: link}})
+            .then(function(prof) {
+                prof.update({
+                    class_no: updated_student_puid,
+                    study_link: study_link
+                });
+            }).then(res.redirect('/Study'));
     },
 
     deleteStudy: (req, res) => {
         let link = req.params.id;
         console.log("PuID is", link);
-        let deleteUserQuery = 'DELETE FROM study WHERE study_link = "' + link +'"';
+        // let deleteUserQuery = 'DELETE FROM study WHERE study_link = "' + link +'"';
 
 
             
-        db.query(deleteUserQuery, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.redirect('/Study');
-        });     
-        
+        // db.query(deleteUserQuery, (err, result) => {
+        //     if (err) {
+        //         return res.status(500).send(err);
+        //     }
+        //     res.redirect('/Study');
+        // });     
+        study.findOne({where: {study_link: link}})
+            .then(function(mat) {
+                mat.destroy({});
+            }).then(res.redirect('/Study'));
     }
  };
