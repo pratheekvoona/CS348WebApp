@@ -30,9 +30,8 @@ module.exports = {
                 });
             } else {
 
-                let query = "INSERT INTO `class` (class_no, class_title) VALUES ('" +
-                class_no + "', '" + class_title + "')";
-                db.query(query, (err, result) => {
+                let query = "INSERT INTO `class` (class_no, class_title) VALUES (?,?)";
+                db.query(query, [class_no, class_title], (err, result) => {
                     if (err) {
                         return res.status(500).send(err);
                     }
